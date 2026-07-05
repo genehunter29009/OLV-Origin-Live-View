@@ -1,0 +1,86 @@
+﻿
+
+
+
+This is basic description of use for Origin Live View also known as OLV.
+
+1. OLV is expecting the Celestron Origin to already be turned on when you start up. The Origin should be on for at least 15 seconds.
+2. When you first startup OLV do not click on anything or try to do anything other than view the help file until you see a popup telling you that you are connected to the Origin.
+   The Origin Telescope will usually connect within a few seconds but it may take up to 15 seconds if the telescope is busy.
+   The popup will say "Connected to Origin" and the OLV window will change to show the current live view of the telescope.
+
+   you can resize OLV to see a bigger image at any time
+   you can save live view images to a file at any time, by clicking on Live View and Save Image.
+
+
+3. Once connected you should see basic stats on the telescope in the menu location. 
+    Focuser position:      This is the current encoder tick on the Focuser.
+    Battery Percent:       This is the current battery percent and is still being worked on to be more accurate. 
+    Humidity:              Shows Humidity on the Telescope in percent.
+    Dew Point:             This predicts the dew point where dew would start to form on the front lens if the temperature is lower than anbient temperature. 
+    Ambient:               Temperature of the air entering the Fans.
+    Camera:                Temperature of the Camera. this is important when considering Dark frames or retaking dark frames. 
+    CPU:                   This is the temperature of the CPU on the Raspberry pi computer, It should always be below 80 degrees C.,
+                           If its extremely cold you can consider turning off the CPU fan but continue to monitor the CPU temperature.
+   FrontCell:              This is the temperature of the front cell, if you turn on the Dew Heater you will start to see this rise. 
+                           as the temperature outside approaches dew point you want this front cell to stay warmer than ambient temperature.
+   CPUFan:                 Displays the status of the CPU Fan
+   OTAFan:                 Displays the status of the OTA Fan.
+   Heater:                 Displays if the dew heater is in manual mode or automatic mode.
+   Filter:                 When you update the filter this will display the current filter used.    
+
+4. Connecting to Stellarium. is easy, but you will need to add two telescopes to the Telescope control in Stellarium
+     The first Telescope control is activated when you press Ctrl 1 in Stellarium. The Origin will receive a command to slew to the target.
+     the second telescope control is activated when you press Ctrl 2 in Stellarium. OLV will open up Schedule Image windows. This command is used strictly for
+     Scheduling images. I am still working on the full functionality of this feature.
+
+     configuring Stellarium, open control panel or press F2. on the far right you will see plugins. scroll down to telescope control and click on it.
+     You will be creating two telescope controls. 
+     the first telescope control is the one that will slew to the target. and you will select the following
+          
+          Telescope Controlled by:  External Software or a remote computer
+           Name:                     Origin
+           j2000:                    Leave at default
+           connection delay:         Leave at default
+           Connection Settings:      localhost if you are running Stellarium on the same computer as OLV. if you are running OLV on a different computer
+                                     you will need to enter the IP address of the computer running OLV.
+           Connect at Startup:       Checked
+           Port:                     10001
+           Use Field of View:        Checked
+           FOV:                      1 degree
+
+           Telescope Controlled by:  External Software or a remote computer
+           Name:                     Origin Schedule
+           j2000:                    Leave at default
+           connection delay:         Leave at default
+           Connection Settings:      localhost if you are running Stellarium on the same computer as OLV. if you are running OLV on a different computer
+                                     you will need to enter the IP address of the computer running OLV.
+           Connect at Startup:       Checked
+           Port:                     10002
+           Use Field of View:        unchecked
+           FOV:                      blank.
+
+           Note: If you are running OLV on a different computer than Stellarium , then when you go to Stellarium connect you need to enter the external IP vs localhost. 
+           localhost is easier since it never changes. localhost also is faster. But if you want to run on separate computers you need to use the external IP address.
+
+
+   You can now close the control panel you would now start the Telescope server on OLV by going to Stellarium and clicking on Connect. then click on start telescope server. 
+   you can now startup Stellarium and it should connect to the Origin. you should see a circle with crosshairs where the telescope is pointing.
+
+5. Focusing...you can focus using the keys Shift + and Shift -. Shift + will increment the focus position by +1 while Shift - will decrement the focuser -10. This is because
+     you always want to approach focus from this direction for accuracy. 
+6. Imaging....When you click on the menu item to Take Image. you are starting an image where you are currently pointed. This image can be set to run for x number of minutes. After 
+   that time it will automatically end and you will have a Master tiff file generated. If you stop the image early it will still create the master tiff file. 
+7  Initializing requires that you know your Latitude and Longitude in Decimal Degrees format. You would also need to manually enter your time zone. 
+8.Mosaic mode is in testing phase. I have it currently disabled.
+9. OLV Dithering is in a testing phase. It is enabled. The way it works is that it is idependent of capture image. What you want to do is startup your image capture. Then
+   you would open the Dithering form and start dithering. At this point Dithering will start in the middle of a box. It will slew three times to the right, and from there it
+   will slew around the box and continue until you stop it. There will be a Dither onece per minute and a full box pattern will be accomplished after 23 minutes and after that 
+   you can stop it at any time howevver an hour of exposure would be the minimum needed for true dithering where you get the highest quality image.I will be fine tuning the 
+   dithering pattern and distance traveled in the next few versions until I feel it is working as intended. I may add options later to control distance and patterns. 
+
+               
+
+
+
+
